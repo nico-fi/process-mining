@@ -1,5 +1,6 @@
 print("Discovering...");
 
+use_filter = System.getenv("USE_FILTER");
 importlog = System.getenv("IMPORTLOG");
 exportmodel = System.getenv("EXPORTMODEL");
 
@@ -88,7 +89,8 @@ XLogHybridILPMinerParametersImpl pars = new XLogHybridILPMinerParametersImpl(con
 
 
 pars.setEventClassifier(clss);
-pars.setFilter(filt);
+if (use_filter.equals("False"))
+    pars.setFilter(filt);
 //pars.setClassifier(clss);
 
 //HybridILPMinerPlugin ilp = new HybridILPMinerPlugin();

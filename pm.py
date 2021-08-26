@@ -1,28 +1,33 @@
 import subprocess
+from sys import stdout
+from enum import Enum
 from collections import Counter
 from datetime import timedelta
-from enum import Enum
 from os import path, makedirs
-from math import nan
 from matplotlib import pyplot
 from pandas import DataFrame
 from tempfile import NamedTemporaryFile
-from pm4py import sort_log, read_bpmn, read_pnml, view_petri_net
+from pm4py import read_bpmn, read_pnml
 from pm4py.objects.log.obj import EventLog, Trace
 from pm4py.objects.log.importer.xes import importer as xes_importer
 from pm4py.objects.log.exporter.xes import exporter as xes_exporter
 from pm4py.objects.conversion.log import converter as log_converter
 from pm4py.objects.conversion.bpmn import converter as bpmn_converter
+from pm4py.objects.petri_net.exporter import exporter as pnml_exporter
 from pm4py.streaming.importer.csv import importer as csv_stream_importer
 from pm4py.algo.discovery.inductive import algorithm as inductive_miner
-from pm4py.algo.evaluation.replay_fitness import algorithm as fitness
-from pm4py.algo.evaluation.precision import algorithm as precision
+from pm4py.algo.evaluation.replay_fitness import algorithm as fitness_evaluator
+from pm4py.algo.evaluation.precision import algorithm as precision_evaluator
+
+CASE_ID_KEY = 'case:concept:name'
+ACTIVITY_KEY = 'concept:name'
+FINAL_ACTIVITY = '_END_'
 
 
 class Algo(Enum):
     IND = 1
-    ILP = 2
-    SPL = 3
+    SPL = 2
+    ILP = 3
 
 
 class Order(Enum):
@@ -33,177 +38,170 @@ class Order(Enum):
 
 class Miner:
 
-    def __init__(self, file_name, case_id_key='case:concept:name', activity_key='concept:name',
-                 timestamp_key='time:timestamp'):
+    @staticmethod
+    def generate_csv(log_name, case_id=CASE_ID_KEY, activity=ACTIVITY_KEY, timestamp='time:timestamp'):
+        """
+        Converte il file XES in input in uno stream di eventi ordinati cronologicamente con formato CSV. Ogni traccia
+        viene estesa con un evento conclusivo che ne definisca il termine
+        :param log_name: nome del file XES (eventualmente compresso) contenente il log di eventi
+        :param case_id: attributo identificativo dell'istanza di processo (con aggiunta del prefisso 'case:')
+        :param activity: attributo identificativo dell'attività eseguita
+        :param timestamp: attributo indicante l'istante di esecuzione di un evento
+        """
+        csv_path = path.join('eventlog', 'CSV', log_name + '.csv')
+        if not path.isfile(csv_path):
+            print('Generating CSV file from XES log...')
+            xes_path = path.join('eventlog', 'XES', log_name)
+            xes_path += '.xes.gz' if path.isfile(xes_path + '.xes.gz') else '.xes'
+            log = xes_importer.apply(xes_path, variant=xes_importer.Variants.LINE_BY_LINE)
+            for trace in log:
+                trace.append({activity: FINAL_ACTIVITY, timestamp: trace[-1][timestamp] + timedelta(seconds=1)})
+            dataframe = log_converter.apply(log, variant=log_converter.Variants.TO_DATA_FRAME)
+            dataframe = dataframe.filter(items=[activity, timestamp, case_id]).sort_values(timestamp, kind='mergesort')
+            dataframe = dataframe.rename(columns={activity: ACTIVITY_KEY, case_id: CASE_ID_KEY})
+            makedirs(path.dirname(csv_path), exist_ok=True)
+            dataframe.to_csv(csv_path, index=False)
+
+    def __init__(self, log_name, order, algorithm, use_filter, cut_point, top_variants):
         """
         Metodo costruttore
-        :param file_name: nome del file XES (eventualmente compresso) contenente il log di eventi
-        :param case_id_key: attributo identificativo dell'istanza di processo (con aggiunta del prefisso 'case:')
-        :param activity_key: attributo identificativo dell'attività eseguita
-        :param timestamp_key: attributo indicante l'istante di esecuzione di un evento
-        """
-        self.file_name = file_name
-        self.case_id_key = case_id_key
-        self.activity_key = activity_key
-        self.timestamp_key = timestamp_key
-        self.final_activity = 'END'
-        self.xes_log = None
-
-    def import_xes_log(self):
-        """
-        Importa il log XES richiesto per la generazione del file CSV e la valutazione dei modelli di processo.
-        L'ordinamento delle tracce ne riflette la data di conclusione
-        """
-        print('Importing XES log...')
-        self.xes_log = xes_importer.apply(self.file_name, variant=xes_importer.Variants.LINE_BY_LINE)
-        self.xes_log = sort_log(self.xes_log, key=lambda trace: trace[-1][self.timestamp_key])
-        self.file_name = self.file_name.removesuffix('.gz').removesuffix('.xes')
-
-    def generate_csv(self):
-        """
-        Genera uno stream di eventi ordinati cronologicamente (formato CSV) ricorrendo al log XES in memoria.
-        Ogni traccia viene estesa con un evento conclusivo che ne definisca il termine
-        """
-        print('Generating CSV file from XES log...')
-        dataframe = log_converter.apply(self.xes_log, variant=log_converter.Variants.TO_DATA_FRAME)
-        final_events = []
-        for trace in self.xes_log:
-            end_time = trace[-1][self.timestamp_key] + timedelta(seconds=1)
-            case_id = trace.attributes[self.case_id_key.removeprefix('case:')]
-            event = {self.activity_key: self.final_activity, self.timestamp_key: end_time, self.case_id_key: case_id}
-            final_events.append(event)
-        dataframe = dataframe.append(final_events, ignore_index=True)
-        dataframe.index.name = 'index'
-        dataframe = dataframe.sort_values([self.timestamp_key, dataframe.index.name])
-        dataframe.to_csv(self.file_name + '.csv', index=False)
-
-    def set_parameters(self, order, algorithm, cut_point, top_variants):
-        """
-        Definisce i parametri necessari all'elaborazione dello stream di eventi
+        :param log_name: nome del file CSV contenente lo stream di eventi
         :param order: criterio di ordinamento delle varianti
-        :param algorithm: algoritmo da utilizzare per apprendere un nuovo modello di processo
-        :param cut_point: numero di istanze di processo da esaminare per apprendere e valutare un nuovo modello
-        :param top_variants: numero di varianti da impiegare nella costruzione del modello
+        :param algorithm: algoritmo da utilizzare nell'apprendimento di un nuovo modello
+        :param use_filter: booleano per l'utilizzo di tecniche di filtering
+        :param cut_point: numero di istanze da esaminare preliminarmente
+        :param top_variants: numero di varianti da impiegare nella costruzione di un modello
         """
+        self.log_name = log_name
         self.order = order
         self.algo = algorithm
+        self.use_filter = use_filter
         self.cut_point = cut_point
         self.top_variants = top_variants
         self.processed_traces = 0
         self.variants = Counter()
-        self.net = None
-        self.i_marking = None
-        self.f_marking = None
-        self.results = DataFrame(columns=['fitting_traces%', 'average_trace_fitness', 'precision', 'f-measure'])
-        self.results.index.name = 'training'
+        self.best_variants = None
+        self.models = []
+        self.drifts = []
+        self.evaluations = []
 
-    def process_csv_stream(self):
+    def process_stream(self):
         """
-        Processa iterativamente gli eventi archiviati in un file CSV, ignorando attività che si ripetano in modo
-        consecutivo e aggiornando il contatore delle varianti in corrispondenza di un evento finale.
-        Dopo aver esaminato un numero di tracce prestabilito, viene generato e valutato un nuovo modello di processo
+        Processa iterativamente uno stream di eventi in formato CSV, ignorando attività che si ripetano in modo
+        consecutivo per un numero di occorrenze superiore a due e aggiornando il contatore delle varianti in
+        corrispondenza di un evento finale. Dopo aver esaminato un dato numero di istanze preliminari, viene generato
+        un primo modello di processo. La generazione di nuovi modelli avverrà in corrispondenza di un concept drift.
+        Modello iniziale e modello corrente saranno impiegati nel calcolo di precision e fitness
         """
-        stream = csv_stream_importer.apply(self.file_name + '.csv')
+        print('\nProcessing event stream...')
+        stream = csv_stream_importer.apply(path.join('eventlog', 'CSV', self.log_name + '.csv'))
         traces = {}
         for event in stream:
-            case_id = event[self.case_id_key]
-            activity = event[self.activity_key]
-            if activity == self.final_activity:
-                entry = tuple(traces[case_id])
-                self.variants[entry] = len(entry) if self.order == Order.MAX else -len(
-                    entry) if self.order == Order.MIN else self.variants[entry] + 1
-                del traces[case_id]
+            case = event[CASE_ID_KEY]
+            activity = event[ACTIVITY_KEY]
+            if activity == FINAL_ACTIVITY:
+                new_trace = tuple(traces.pop(case))
+                self.variants[new_trace] += 1
                 self.processed_traces += 1
-                if self.processed_traces % self.cut_point == 0:
+                if self.processed_traces == self.cut_point:
+                    self.select_best_variants()
+                    self.drifts.append([self.processed_traces, *self.best_variants])
                     self.learn_model()
-                    self.evaluate_model()
-            elif case_id not in traces:
-                traces[case_id] = [activity]
-            elif traces[case_id][-1] != activity:
-                traces[case_id].append(activity)
+                elif self.processed_traces > self.cut_point:
+                    stdout.write(f'\rCurrent model: {len(self.drifts)}\tCurrent trace: {self.processed_traces}')
+                    self.evaluate_model(new_trace)
+                    self.select_best_variants()
+                    if self.best_variants != self.drifts[-1][1:]:
+                        self.drifts.append([self.processed_traces, *self.best_variants])
+                        self.learn_model()
+            elif case not in traces:
+                traces[case] = [activity]
+            elif len(traces[case]) == 1 or traces[case][-1] != activity or traces[case][-2] != activity:
+                traces[case].append(activity)
+
+    def select_best_variants(self):
+        """
+        Seleziona le varianti più significative all'istante corrente, considerando un dato criterio d'ordine
+        """
+        if self.order == Order.FRQ:
+            self.best_variants = list(item[0] for item in self.variants.most_common(self.top_variants))
+        else:
+            self.best_variants = list(item[0] for item in self.variants.most_common())
+            self.best_variants.sort(key=lambda variant: len(variant), reverse=self.order == Order.MAX)
+            self.best_variants = self.best_variants[:self.top_variants]
 
     def learn_model(self):
         """
-        Apprende un nuovo modello di processo utilizzando le varianti più significative all'istante corrente
+        Genera un nuovo modello di processo impiegando le varianti più significative all'istante corrente
         """
-        print(f'Learning model {len(self.results) + 1}...')
-        log = EventLog()
-        best_variants = (item[0] for item in self.variants.most_common(self.top_variants))
-        for trace in best_variants:
-            log.append(Trace([{'concept:name': activity} for activity in trace]))
+        log = EventLog(Trace({ACTIVITY_KEY: activity} for activity in variant) for variant in self.best_variants)
         if self.algo == Algo.IND:
-            self.net, self.i_marking, self.f_marking = inductive_miner.apply(log, variant=inductive_miner.Variants.IM)
+            variant = inductive_miner.Variants.IMf if self.use_filter else inductive_miner.Variants.IM
+            self.models.append(inductive_miner.apply(log, variant=variant))
         else:
-            with NamedTemporaryFile(suffix=('.bpmn' if self.algo == Algo.SPL else '.pnml')) as model:
+            with NamedTemporaryFile(suffix='.bpmn' if self.algo == Algo.SPL else '.pnml') as model_file:
                 with NamedTemporaryFile(suffix='.xes') as log_file:
                     variant = xes_exporter.Variants.LINE_BY_LINE
                     xes_exporter.apply(log, log_file.name, variant, {variant.value.Parameters.SHOW_PROGRESS_BAR: False})
-                    args = ('scripts/run.sh', self.algo.name, log_file.name, path.splitext(model.name)[0])
+                    args = (path.join('scripts', 'run.sh'), self.algo.name, str(self.use_filter), log_file.name,
+                            path.splitext(model_file.name)[0])
                     subprocess.call(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                if self.algo == Algo.SPL:
-                    self.net, self.i_marking, self.f_marking = bpmn_converter.apply(read_bpmn(model.name))
-                else:
-                    self.net, self.i_marking, self.f_marking = read_pnml(model.name)
+                    if self.algo == Algo.SPL:
+                        self.models.append(bpmn_converter.apply(read_bpmn(model_file.name)))
+                    else:
+                        self.models.append(read_pnml(model_file.name))
 
-    def evaluate_model(self, whole=False):
+    def evaluate_model(self, trace):
         """
-        Valuta il modello di processo corrente su un numero prestabilito di istanze successive
-        :param whole: booleano per richiedere la valutazione sull'intero log
+        Valuta modello iniziale e modello corrente sull'istanza di processo indicata
+        :param trace: istanza di processo da impiegare nella valutazione
         """
-        print(f'Evaluating model {len(self.results) + 1}...')
-        if whole or self.processed_traces < len(self.xes_log):
-            metrics = {fitness: fitness.Variants.ALIGNMENT_BASED, precision: precision.Variants.ALIGN_ETCONFORMANCE}
-            begin = 0 if whole else self.processed_traces
-            end = len(self.xes_log) if whole else begin + self.cut_point
-            for key, variant in metrics.items():
-                parameters = {variant.value.Parameters.ACTIVITY_KEY: self.activity_key}
-                metrics[key] = key.apply(self.xes_log[begin:end], self.net, self.i_marking, self.f_marking, parameters,
-                                         variant)
-            f_measure = 2 * metrics[fitness]['average_trace_fitness'] * metrics[precision] / (
-                    metrics[fitness]['average_trace_fitness'] + metrics[precision])
-            row = [metrics[fitness]['percentage_of_fitting_traces'], metrics[fitness]['average_trace_fitness'],
-                   metrics[precision], f_measure]
-        else:
-            row = [nan, nan, nan, nan]
-        self.results.loc['WHOLE' if whole else len(self.results) + 1] = row
+        log = EventLog([Trace({ACTIVITY_KEY: activity} for activity in trace)])
+        fitness_variant = fitness_evaluator.Variants.ALIGNMENT_BASED
+        precision_variant = precision_evaluator.Variants.ALIGN_ETCONFORMANCE
+        precision_parameters = {precision_variant.value.Parameters.SHOW_PROGRESS_BAR: False}
+        self.evaluations.append([])
+        for model in (self.models[-1], self.models[0]):
+            fitness = fitness_evaluator.apply(log, *model, variant=fitness_variant)['average_trace_fitness']
+            precision = precision_evaluator.apply(log, *model, precision_parameters, precision_variant)
+            self.evaluations[-1].extend([fitness, precision, 2 * fitness * precision / (fitness + precision)])
 
     def save_results(self):
         """
-        Salva la tabella di valutazione in formato CSV
+        Esporta concept drifts, valutazioni e modelli di processo
         """
-        if len(self.results) != 0:
-            folder = path.join('results', path.split(self.file_name)[-1])
-            makedirs(folder, exist_ok=True)
-            name = f'{self.order.name}.{self.algo.name}.{self.cut_point}.{self.top_variants}'
-            self.results.to_csv(path.join(folder, name + '.csv'))
+        columns = ['current_trace'] + [f'trace_{i}' for i in range(1, self.top_variants + 1)]
+        dataframe = DataFrame(self.drifts, columns=columns)
+        dataframe.index.name = 'n°_training'
+        folder = path.join('results', self.log_name, 'drift')
+        makedirs(folder, exist_ok=True)
+        file = f'{self.order.name}.{self.cut_point}.{self.top_variants}'
+        dataframe.to_csv(path.join(folder, file + '.csv'))
+        columns = ['fitness', 'precision', 'f-measure', 'static_fitness', 'static_precision', 'static_f-measure']
+        dataframe = DataFrame(self.evaluations, columns=columns)
+        dataframe.loc['MEAN'] = dataframe.mean()
+        dataframe.index.name = 'n°_evaluation'
+        folder = path.join('results', self.log_name, 'evaluation')
+        makedirs(folder, exist_ok=True)
+        filtered = 'UF' if self.use_filter else 'NF'
+        file = f'{self.order.name}.{self.algo.name}.{filtered}.{self.cut_point}.{self.top_variants}'
+        dataframe.to_csv(path.join(folder, file + '.csv'))
+        folder = path.join('results', self.log_name, 'petri')
+        makedirs(folder, exist_ok=True)
+        for index, model in enumerate(self.models):
+            pnml_exporter.apply(model[0], model[1], path.join(folder, file + f'-{index}.pnml'), model[2])
 
-    def show_results(self):
+    def save_variant_histogram(self, y_log=False):
         """
-        Mostra la tabella di valutazione
-        """
-        if len(self.results) != 0:
-            print(self.results)
-        else:
-            print('No evaluation performed!')
-
-    def show_process_model(self):
-        """
-        Illustra il modello di processo corrente come Rete di Petri
-        """
-        if self.net is not None:
-            view_petri_net(self.net, self.i_marking, self.f_marking, format='png')
-        else:
-            print("No model learned!")
-
-    def show_variant_histogram(self, y_log=False):
-        """
-        Illustra l'istogramma delle varianti di processo
+        Esporta l'istogramma delle varianti di processo
         :param y_log: booleano per l'utilizzo di una scala logaritmica sull'asse delle ordinate
         """
-        pyplot.bar(range(len(self.variants)), [abs(value) for value in self.variants.values()])
-        pyplot.title(f'Traces processed: {self.processed_traces}       Variants found: {len(self.variants)}\n')
+        y_axis = self.variants.values() if self.order == Order.FRQ else [len(v) for v in self.variants.keys()]
+        pyplot.bar(range(len(self.variants)), y_axis)
+        pyplot.title(f'Traces processed: {self.processed_traces}     Variants found: {len(self.variants)}\n')
         pyplot.xlabel('Variants')
         pyplot.ylabel('Frequency' if self.order == Order.FRQ else 'Length')
         if y_log:
             pyplot.semilogy()
-        pyplot.show()
+        file = ('frequency' if self.order == Order.FRQ else 'length') + '-histogram.png'
+        pyplot.savefig(path.join('results', self.log_name, file))

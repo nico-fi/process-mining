@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <transition id="a9746f37-9d58-4477-aa51-be7dcd0d7b40">
+        <name>
+          <text>NEW</text>
+        </name>
+      </transition>
+      <transition id="skip_1">
+        <name>
+          <text>skip_1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="6ab68606-80e2-4915-9a31-0e2e6ee0fbf5"/>
+      </transition>
+      <transition id="28637a5d-2246-4cd7-9238-8007a1f8c8f1">
+        <name>
+          <text>DELETE</text>
+        </name>
+      </transition>
+      <transition id="5f60516a-ae58-4ebd-89ef-180293545ac0">
+        <name>
+          <text>FIN</text>
+        </name>
+      </transition>
+      <transition id="b9fc3dd6-2ece-4f94-90c8-351d75c994ab">
+        <name>
+          <text>CODE OK</text>
+        </name>
+      </transition>
+      <transition id="20f625dc-6620-47b7-9209-5d1875d0fc23">
+        <name>
+          <text>BILLED</text>
+        </name>
+      </transition>
+      <transition id="590856dd-44a0-4de3-9063-1ac6f3168831">
+        <name>
+          <text>CHANGE DIAGN</text>
+        </name>
+      </transition>
+      <transition id="skip_2">
+        <name>
+          <text>skip_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="4c4a3cb5-c2e3-4d0c-ad8e-1eb5fe9ec68d"/>
+      </transition>
+      <transition id="507f3d31-b264-41be-a0a7-7e613a09c34e">
+        <name>
+          <text>RELEASE</text>
+        </name>
+      </transition>
+      <arc id="140365012776608" source="source" target="a9746f37-9d58-4477-aa51-be7dcd0d7b40"/>
+      <arc id="140365012776896" source="p_3" target="skip_1"/>
+      <arc id="140365012777184" source="a9746f37-9d58-4477-aa51-be7dcd0d7b40" target="p_3"/>
+      <arc id="140365012775264" source="p_4" target="skip_2"/>
+      <arc id="140365012776032" source="p_4" target="28637a5d-2246-4cd7-9238-8007a1f8c8f1"/>
+      <arc id="140365012778624" source="p_4" target="5f60516a-ae58-4ebd-89ef-180293545ac0"/>
+      <arc id="140365012775456" source="p_5" target="507f3d31-b264-41be-a0a7-7e613a09c34e"/>
+      <arc id="140365542982944" source="p_7" target="20f625dc-6620-47b7-9209-5d1875d0fc23"/>
+      <arc id="140365012775120" source="p_3" target="590856dd-44a0-4de3-9063-1ac6f3168831"/>
+      <arc id="140365012778480" source="skip_1" target="p_4"/>
+      <arc id="140365012776656" source="590856dd-44a0-4de3-9063-1ac6f3168831" target="p_4"/>
+      <arc id="140365012777136" source="skip_2" target="sink"/>
+      <arc id="140365012775312" source="28637a5d-2246-4cd7-9238-8007a1f8c8f1" target="sink"/>
+      <arc id="140365012777520" source="5f60516a-ae58-4ebd-89ef-180293545ac0" target="p_5"/>
+      <arc id="140365043612688" source="507f3d31-b264-41be-a0a7-7e613a09c34e" target="p_6"/>
+      <arc id="140365542983664" source="p_6" target="b9fc3dd6-2ece-4f94-90c8-351d75c994ab"/>
+      <arc id="140365542983856" source="b9fc3dd6-2ece-4f94-90c8-351d75c994ab" target="p_7"/>
+      <arc id="140365542984816" source="20f625dc-6620-47b7-9209-5d1875d0fc23" target="sink"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
