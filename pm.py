@@ -133,7 +133,7 @@ class Miner:
 
     def select_best_variants(self):
         """
-        Seleziona le varianti più significative all'istante corrente secondo un dato criterio d'ordine
+        Determina le varianti più significative all'istante corrente secondo il criterio d'ordine selezionato
         """
         if self.order == Order.FRQ:
             self.best_variants = {item[0]: item[1] for item in self.variants.most_common(self.top)}
@@ -144,7 +144,7 @@ class Miner:
 
     def learn_model(self):
         """
-        Genera un modello di processo impiegando le varianti più significative all'istante corrente
+        Genera un modello di processo utilizzando le varianti più significative all'istante corrente
         """
         log = EventLog()
         for variant, occurrence in self.best_variants.items():
@@ -168,7 +168,7 @@ class Miner:
 
     def evaluate_model(self, trace):
         """
-        Valuta il modello di processo sull'istanza indicata
+        Valuta il modello di processo sull'istanza fornita in input
         :param trace: istanza di processo da impiegare nella valutazione
         """
         log = EventLog([Trace({ACTIVITY_KEY: activity} for activity in trace)])
@@ -179,9 +179,25 @@ class Miner:
         precision = precision_evaluator.apply(log, *self.models[-1], variant=variant, parameters=parameters)
         self.evaluations.append([fitness, precision, 2 * fitness * precision / (fitness + precision)])
 
+    def compute_model_complexity(self, index):
+        """
+        Calcola la complessità del modello indicizzato
+        :param index: indice del modello di cui calcolare la complessità
+        :return: numero di posti, numero di transizioni, numero di archi e metrica "Extended Cardoso" del modello
+        """
+        net = self.models[index][0]
+        ext_card = 0
+        for place in net.places:
+            successor_places = set()
+            for place_arc in place.out_arcs:
+                successors = frozenset(transition_arc.target for transition_arc in place_arc.target.out_arcs)
+                successor_places.add(successors)
+            ext_card += len(successor_places)
+        return len(net.places), len(net.transitions), len(net.arcs), ext_card
+
     def save_results(self):
         """
-        Esporta report, valutazione e modelli di processo
+        Esporta report, valutazioni e modelli di processo
         """
         print('\nExporting results...')
         filtering = 'UFL' if self.filtering else 'NFL'
@@ -190,14 +206,14 @@ class Miner:
         file = f'{self.order.name}.{self.algo.name}.{self.cut}.{self.top}.{filtering}.{frequency}.{update}'
         folder = path.join('results', self.log_name, 'report')
         makedirs(folder, exist_ok=True)
-        columns = ['trace', 'places', 'transitions', 'arcs', *[f'trace_{i}' for i in range(1, self.top + 1)]]
+        columns = ['trace', 'places', 'transitions', 'arcs', 'ext_cardoso',
+                   *[f'trace_{i}' for i in range(1, self.top + 1)]]
         report = DataFrame(columns=columns)
         report.index.name = 'n°_training'
-        for index, model in enumerate(self.models):
-            model_stats = [len(model[0].places), len(model[0].transitions), len(model[0].arcs)]
+        for index, current_variants in enumerate(self.drift_variants):
             traces = [f'[{v}]{k}' if self.order == Order.FRQ else f'[{len(k)}:{v}]{k}' for k, v in
-                      self.drift_variants[index].items()] + [None] * (self.top - len(self.drift_variants[index]))
-            report.loc[len(report)] = [self.drift_moments[index], *model_stats, *traces]
+                      current_variants.items()] + [None] * (self.top - len(current_variants))
+            report.loc[len(report)] = [self.drift_moments[index], *self.compute_model_complexity(index), *traces]
         report.to_csv(path.join(folder, file + '.csv'))
         folder = path.join('results', self.log_name, 'evaluation')
         makedirs(folder, exist_ok=True)
@@ -225,7 +241,7 @@ class Miner:
         makedirs(folder, exist_ok=True)
         if not path.isfile(path.join(folder, file)):
             y_axis = self.variants.values() if self.order == Order.FRQ else [len(v) for v in self.variants.keys()]
-            pyplot.bar(range(len(self.variants)), y_axis)
+            pyplot.bar(range(1, len(self.variants) + 1), y_axis)
             pyplot.title(f'Traces processed: {self.processed_traces}     Variants found: {len(self.variants)}\n')
             pyplot.xlabel('Variants')
             pyplot.ylabel('Frequency' if self.order == Order.FRQ else 'Length')
