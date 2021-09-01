@@ -12,5 +12,5 @@ else
 	export USE_FILTER=$2
 	export IMPORTLOG=$3
 	export EXPORTMODEL=$4.pnml
-	java -da -Xmx8G -classpath "lib/*" -Djava.library.path=./lib -Djava.util.Arrays.useLegacyMergeSort=true org.processmining.contexts.cli.CLI -f Scripts/ILP.txt
+	java -da -Xmx8G -classpath "lib/*" -Djava.library.path=./lib -Djava.util.Arrays.useLegacyMergeSort=true org.processmining.contexts.cli.CLI -f scripts/ILP.txt
 fi

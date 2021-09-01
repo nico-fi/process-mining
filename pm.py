@@ -1,3 +1,4 @@
+import platform
 import subprocess
 from sys import stdout
 from enum import Enum
@@ -158,8 +159,8 @@ class Miner:
                 with NamedTemporaryFile(suffix='.xes') as log_file:
                     variant = xes_exporter.Variants.LINE_BY_LINE
                     xes_exporter.apply(log, log_file.name, variant, {variant.value.Parameters.SHOW_PROGRESS_BAR: False})
-                    args = (path.join('scripts', 'run.sh'), self.algo.name, str(self.filtering), log_file.name,
-                            path.splitext(model_file.name)[0])
+                    script = path.join('scripts', 'run.bat' if platform.system() == "Windows" else 'run.sh')
+                    args = (script, self.algo.name, str(self.filtering), log_file.name, path.splitext(model_file.name)[0])
                     subprocess.call(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
                 self.models.append(bpmn_converter.apply(read_bpmn(model_file.name)) if self.algo == Algo.SPL else
                                    read_pnml(model_file.name))
