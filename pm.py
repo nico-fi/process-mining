@@ -1,3 +1,4 @@
+import os
 import platform
 import subprocess
 from sys import stdout
@@ -8,7 +9,7 @@ from os import path, makedirs
 from matplotlib import pyplot
 from pandas import DataFrame
 from time import process_time
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryDirectory
 from pm4py import read_bpmn, read_pnml
 from pm4py.objects.log.obj import EventLog, Trace
 from pm4py.objects.log.importer.xes import importer as xes_importer
@@ -153,17 +154,18 @@ class Miner:
                 log.append(Trace({ACTIVITY_KEY: activity} for activity in variant))
         if self.algo == Algo.IND:
             variant = inductive_miner.Variants.IMf if self.filtering else inductive_miner.Variants.IM
-            self.models.append(inductive_miner.apply(log, variant=variant))
+            model = inductive_miner.apply(log, variant=variant)
         else:
-            with NamedTemporaryFile(suffix='.bpmn' if self.algo == Algo.SPL else '.pnml') as model_file:
-                with NamedTemporaryFile(suffix='.xes') as log_file:
-                    variant = xes_exporter.Variants.LINE_BY_LINE
-                    xes_exporter.apply(log, log_file.name, variant, {variant.value.Parameters.SHOW_PROGRESS_BAR: False})
-                    script = path.join('scripts', 'run.bat' if platform.system() == "Windows" else 'run.sh')
-                    args = (script, self.algo.name, str(self.filtering), log_file.name, path.splitext(model_file.name)[0])
-                    subprocess.call(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-                self.models.append(bpmn_converter.apply(read_bpmn(model_file.name)) if self.algo == Algo.SPL else
-                                   read_pnml(model_file.name))
+            with TemporaryDirectory() as temp:
+                log_path = path.join(temp, 'log.xes')
+                variant = xes_exporter.Variants.LINE_BY_LINE
+                xes_exporter.apply(log, log_path, variant, {variant.value.Parameters.SHOW_PROGRESS_BAR: False})
+                model_path = path.join(temp, 'model.bpmn' if self.algo == Algo.SPL else 'model.pnml')
+                script = path.join('scripts', 'run.bat' if platform.system() == "Windows" else 'run.sh')
+                args = (script, self.algo.name, str(self.filtering), log_path, path.splitext(model_path)[0])
+                subprocess.call(args, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+                model = bpmn_converter.apply(read_bpmn(model_path)) if self.algo == Algo.SPL else read_pnml(model_path)
+        self.models.append(model)
         self.drift_moments.append(self.processed_traces)
         self.drift_variants.append(self.best_variants)
 

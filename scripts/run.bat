@@ -1,8 +1,9 @@
 IF "%1"=="SPL" (
 	IF "%2"=="True" (
 		java -cp "lib/*" au.edu.unimelb.services.ServiceProvider "SMD" 0.1 0.4 "false" %3 %4
-		) ELSE (
+	) ELSE (
 		java -cp "lib/*" au.edu.unimelb.services.ServiceProvider "SMD" 0.1 0.0 "false" %3 %4
+	)
 ) ELSE (
 	set USE_FILTER=%2
 	set IMPORTLOG=%3
