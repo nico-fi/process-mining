@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="ent_idaa31563f-a3d3-4ded-a007-029bb9e14283">
+        <name>
+          <text>ent_idaa31563f-a3d3-4ded-a007-029bb9e14283</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="ent_id80e770e5-5a68-4a4b-90a1-4ff121416643">
+        <name>
+          <text>ent_id80e770e5-5a68-4a4b-90a1-4ff121416643</text>
+        </name>
+      </place>
+      <place id="ent_ide0734089-c8c7-40dc-b204-c745d41c1df2">
+        <name>
+          <text>ent_ide0734089-c8c7-40dc-b204-c745d41c1df2</text>
+        </name>
+      </place>
+      <place id="ent_ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b">
+        <name>
+          <text>ent_ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b</text>
+        </name>
+      </place>
+      <place id="exi_id2e312e81-47b5-4a1f-90b8-e1d161f0b296">
+        <name>
+          <text>exi_id2e312e81-47b5-4a1f-90b8-e1d161f0b296</text>
+        </name>
+      </place>
+      <transition id="id587d4325-ddbf-423d-ba75-b63bcff804e5">
+        <name>
+          <text>Send Fine</text>
+        </name>
+      </transition>
+      <transition id="ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b">
+        <name>
+          <text>Add penalty</text>
+        </name>
+      </transition>
+      <transition id="ida037c53f-bd65-4b59-91a7-f26a8061feca">
+        <name>
+          <text>Payment</text>
+        </name>
+      </transition>
+      <transition id="idaa31563f-a3d3-4ded-a007-029bb9e14283">
+        <name>
+          <text>Send for Credit Collection</text>
+        </name>
+      </transition>
+      <transition id="id3cb885d1-e2f4-409e-a421-fbb061d1068e">
+        <name>
+          <text>Create Fine</text>
+        </name>
+      </transition>
+      <transition id="id80e770e5-5a68-4a4b-90a1-4ff121416643">
+        <name>
+          <text>id80e770e5-5a68-4a4b-90a1-4ff121416643</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="58c8fd3e-28e8-47b2-b20d-0f9db65d2ef7"/>
+      </transition>
+      <transition id="ide0734089-c8c7-40dc-b204-c745d41c1df2">
+        <name>
+          <text>Insert Fine Notification</text>
+        </name>
+      </transition>
+      <arc id="2048786368256" source="exi_id2e312e81-47b5-4a1f-90b8-e1d161f0b296" target="ida037c53f-bd65-4b59-91a7-f26a8061feca"/>
+      <arc id="2048786317856" source="ent_id80e770e5-5a68-4a4b-90a1-4ff121416643" target="id80e770e5-5a68-4a4b-90a1-4ff121416643"/>
+      <arc id="2048786319392" source="ent_ide0734089-c8c7-40dc-b204-c745d41c1df2" target="ide0734089-c8c7-40dc-b204-c745d41c1df2"/>
+      <arc id="2048786367776" source="id80e770e5-5a68-4a4b-90a1-4ff121416643" target="sink"/>
+      <arc id="2048786368064" source="source" target="id3cb885d1-e2f4-409e-a421-fbb061d1068e"/>
+      <arc id="2048786367584" source="ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b" target="ent_idaa31563f-a3d3-4ded-a007-029bb9e14283"/>
+      <arc id="2048786318960" source="ent_idaa31563f-a3d3-4ded-a007-029bb9e14283" target="idaa31563f-a3d3-4ded-a007-029bb9e14283"/>
+      <arc id="2048786367104" source="id587d4325-ddbf-423d-ba75-b63bcff804e5" target="ent_ide0734089-c8c7-40dc-b204-c745d41c1df2"/>
+      <arc id="2048786367872" source="id3cb885d1-e2f4-409e-a421-fbb061d1068e" target="exi_id2e312e81-47b5-4a1f-90b8-e1d161f0b296"/>
+      <arc id="2048786368160" source="exi_id2e312e81-47b5-4a1f-90b8-e1d161f0b296" target="id587d4325-ddbf-423d-ba75-b63bcff804e5"/>
+      <arc id="2048786366912" source="ida037c53f-bd65-4b59-91a7-f26a8061feca" target="ent_id80e770e5-5a68-4a4b-90a1-4ff121416643"/>
+      <arc id="2048786367680" source="ide0734089-c8c7-40dc-b204-c745d41c1df2" target="ent_ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b"/>
+      <arc id="2048786319824" source="ent_ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b" target="ida3686eea-e96b-46e3-82ab-9c6bf6bbfc0b"/>
+      <arc id="2048786367968" source="idaa31563f-a3d3-4ded-a007-029bb9e14283" target="ent_id80e770e5-5a68-4a4b-90a1-4ff121416643"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
