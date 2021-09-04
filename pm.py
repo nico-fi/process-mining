@@ -4,9 +4,9 @@ from sys import stdout
 from enum import Enum
 from collections import Counter
 from datetime import timedelta
-from os import path, makedirs
+from os import path, makedirs, listdir
 from matplotlib import pyplot
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 from time import process_time
 from tempfile import TemporaryDirectory
 from pm4py import read_bpmn, read_pnml
@@ -250,3 +250,34 @@ class Miner:
             if y_log:
                 pyplot.semilogy()
             pyplot.savefig(path.join(folder, file))
+
+    @staticmethod
+    def generate_summary(log_name):
+        """
+        Genera una visualizzazione sintetica dei risultati ottenuti
+        :param log_name: nome del log per il quale generare un sommario dei risultati
+        """
+        print('Generating summary...')
+        folder = path.join('results', log_name)
+        error_file = path.join(folder, 'errors.csv')
+        errors = read_csv(error_file) if path.isfile(error_file) else DataFrame(columns=['algo'])
+        columns = ['order', 'top-variants', 'set-up', 'fitness', 'precision', 'f-measure', 'time', 'ext_cardoso']
+        for algo in Algo:
+            summary = DataFrame(columns=columns)
+            for error in errors.loc[errors['algo'] == algo.name].itertuples():
+                row = [error.order, error.top, f'{error.filtering} {error.frequency} {error.update}'] + ['-'] * 5
+                summary.loc[len(summary)] = row
+            for file in listdir(path.join(folder, 'evaluation')):
+                if algo.name in file:
+                    parameters = file.split(sep='.')
+                    row = [parameters[0], parameters[3], f'{parameters[4]} {parameters[5]} {parameters[6]}']
+                    evaluation = read_csv(path.join(folder, 'evaluation', file), dtype={'n°_evaluation': 'str'})
+                    row.extend(evaluation[val][len(evaluation) - 2] for val in ('fitness', 'precision', 'f-measure'))
+                    row.append(evaluation['time'][len(evaluation) - 1])
+                    report = read_csv(path.join(folder, 'report', file))
+                    row.append(str(report['ext_cardoso'].tolist()))
+                    summary.loc[len(summary)] = row
+            summary = summary.sort_values(['order', 'top-variants', 'set-up'], ignore_index=True)
+            summary.index.name = 'experiment'
+            summary.index += 1
+            summary.to_csv(path.join(folder, algo.name + '.csv'))
