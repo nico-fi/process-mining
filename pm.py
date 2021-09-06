@@ -280,6 +280,7 @@ class Miner:
                     report = read_csv(path.join(folder, 'report', file))
                     row.append(str(report['ext_cardoso'].tolist()))
                     summary.loc[len(summary)] = row
+            summary['top-variants'] = summary['top-variants'].astype(int)
             summary = summary.sort_values(['order', 'top-variants', 'set-up'], ignore_index=True)
             summary.index.name = 'experiment'
             summary.index += 1
