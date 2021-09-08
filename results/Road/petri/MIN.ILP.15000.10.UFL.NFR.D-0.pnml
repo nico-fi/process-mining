@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="n4">
+        <name>
+          <text>sink</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n5">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n1">
+        <name>
+          <text>place_0</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n2">
+        <name>
+          <text>place_1</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n3">
+        <name>
+          <text>place_2</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <transition id="n6">
+        <name>
+          <text>n6</text>
+        </name>
+        <graphics>
+          <position x="12.5" y="12.5"/>
+          <dimension x="15.0" y="15.0"/>
+        </graphics>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="d401f3c6-da79-4b1f-8002-ea90eebe36c1"/>
+      </transition>
+      <transition id="n7">
+        <name>
+          <text>Create Fine</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n10">
+        <name>
+          <text>Payment</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n9">
+        <name>
+          <text>n9</text>
+        </name>
+        <graphics>
+          <position x="12.5" y="12.5"/>
+          <dimension x="15.0" y="15.0"/>
+        </graphics>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="b221a87a-e0e1-4fe9-9311-6e180d7c7c4e"/>
+      </transition>
+      <transition id="n8">
+        <name>
+          <text>Send Fine</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <arc id="2358105646560" source="n2" target="n6">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358193532160" source="n1" target="n10">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358193532832" source="n5" target="n9">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358193532256" source="n6" target="n4">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103652384" source="n2" target="n8">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103652288" source="n7" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103654208" source="n10" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103653248" source="n10" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103652960" source="n9" target="n3">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358193532208" source="n8" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358193529808" source="n2" target="n10">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103653296" source="n1" target="n6">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103653008" source="n7" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2358103652432" source="n3" target="n7">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="n4">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

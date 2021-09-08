@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="n1">
+        <name>
+          <text>place_0</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n5">
+        <name>
+          <text>place_4</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n6">
+        <name>
+          <text>place_5</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n8">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n4">
+        <name>
+          <text>place_3</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n2">
+        <name>
+          <text>place_1</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n3">
+        <name>
+          <text>place_2</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <place id="n7">
+        <name>
+          <text>sink</text>
+        </name>
+        <graphics>
+          <position x="11.25" y="11.25"/>
+          <dimension x="12.5" y="12.5"/>
+        </graphics>
+      </place>
+      <transition id="n9">
+        <name>
+          <text>Add penalty</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n12">
+        <name>
+          <text>Insert Fine Notification</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n13">
+        <name>
+          <text>Create Fine</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n14">
+        <name>
+          <text>Send Fine</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n11">
+        <name>
+          <text>n11</text>
+        </name>
+        <graphics>
+          <position x="12.5" y="12.5"/>
+          <dimension x="15.0" y="15.0"/>
+        </graphics>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="ef53e4ab-3060-4ad0-b590-d5748813af4a"/>
+      </transition>
+      <transition id="n10">
+        <name>
+          <text>Send for Credit Collection</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <transition id="n15">
+        <name>
+          <text>n15</text>
+        </name>
+        <graphics>
+          <position x="12.5" y="12.5"/>
+          <dimension x="15.0" y="15.0"/>
+        </graphics>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="49f554d1-cb30-41fa-bf08-3506e8e64252"/>
+      </transition>
+      <transition id="n16">
+        <name>
+          <text>Payment</text>
+        </name>
+        <graphics>
+          <position x="17.5" y="15.0"/>
+          <dimension x="25.0" y="20.0"/>
+        </graphics>
+      </transition>
+      <arc id="2085044109952" source="n5" target="n16">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044113024" source="n9" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111104" source="n6" target="n9">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110336" source="n14" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110864" source="n10" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044112400" source="n1" target="n10">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110624" source="n1" target="n12">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110240" source="n2" target="n11">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044109472" source="n5" target="n11">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110384" source="n16" target="n5">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111920" source="n8" target="n15">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044109616" source="n2" target="n16">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111536" source="n4" target="n13">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110528" source="n5" target="n12">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111296" source="n1" target="n11">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110912" source="n13" target="n3">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044112448" source="n14" target="n5">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044112064" source="n9" target="n5">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111680" source="n16" target="n1">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044113360" source="n9" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044109904" source="n15" target="n4">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044109664" source="n11" target="n7">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044113120" source="n13" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044110960" source="n1" target="n16">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044112880" source="n3" target="n14">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044113264" source="n12" target="n6">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044109424" source="n2" target="n12">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+      <arc id="2085044111728" source="n16" target="n2">
+        <arctype>
+          <text>normal</text>
+        </arctype>
+      </arc>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="n7">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
