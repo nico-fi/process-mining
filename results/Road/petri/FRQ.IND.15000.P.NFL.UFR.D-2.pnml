@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <transition id="0e19e13a-7ffb-41c0-9f8b-cb11c0cb7829">
+        <name>
+          <text>Send Fine</text>
+        </name>
+      </transition>
+      <transition id="4f0886b3-a54b-4372-9940-e498a45be1d0">
+        <name>
+          <text>Insert Fine Notification</text>
+        </name>
+      </transition>
+      <transition id="skip_1">
+        <name>
+          <text>skip_1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="8d01b482-e28d-48d0-b2ea-7248f9ca13ff"/>
+      </transition>
+      <transition id="skip_2">
+        <name>
+          <text>skip_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="10e4f921-146b-4427-8871-750b8b9c9636"/>
+      </transition>
+      <transition id="d3693a3d-be4a-407a-a57b-3dfbf9a7844a">
+        <name>
+          <text>Send for Credit Collection</text>
+        </name>
+      </transition>
+      <transition id="12c2ac47-2ddb-4dc2-9507-287a269b7196">
+        <name>
+          <text>Create Fine</text>
+        </name>
+      </transition>
+      <transition id="38392a97-c085-4e0d-8a8a-f92e7c45270a">
+        <name>
+          <text>Payment</text>
+        </name>
+      </transition>
+      <transition id="ced0afe3-9021-4931-a1a0-ae63beae2037">
+        <name>
+          <text>Add penalty</text>
+        </name>
+      </transition>
+      <transition id="skip_3">
+        <name>
+          <text>skip_3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="fa66bc31-5e8c-44ca-85f1-45f457c21f69"/>
+      </transition>
+      <arc id="3121418457728" source="source" target="12c2ac47-2ddb-4dc2-9507-287a269b7196"/>
+      <arc id="3121418458112" source="38392a97-c085-4e0d-8a8a-f92e7c45270a" target="sink"/>
+      <arc id="3121418457824" source="12c2ac47-2ddb-4dc2-9507-287a269b7196" target="p_3"/>
+      <arc id="3121418458016" source="p_3" target="38392a97-c085-4e0d-8a8a-f92e7c45270a"/>
+      <arc id="3121418457152" source="p_4" target="skip_1"/>
+      <arc id="3121418459840" source="skip_2" target="p_6"/>
+      <arc id="3121418460608" source="p_5" target="ced0afe3-9021-4931-a1a0-ae63beae2037"/>
+      <arc id="3121418460320" source="p_6" target="skip_3"/>
+      <arc id="3121418461088" source="skip_3" target="sink"/>
+      <arc id="3121418460416" source="d3693a3d-be4a-407a-a57b-3dfbf9a7844a" target="sink"/>
+      <arc id="3121418458352" source="p_3" target="0e19e13a-7ffb-41c0-9f8b-cb11c0cb7829"/>
+      <arc id="3121418458448" source="0e19e13a-7ffb-41c0-9f8b-cb11c0cb7829" target="p_4"/>
+      <arc id="3121418459024" source="skip_1" target="p_5"/>
+      <arc id="3121418459216" source="p_4" target="4f0886b3-a54b-4372-9940-e498a45be1d0"/>
+      <arc id="3121418459312" source="4f0886b3-a54b-4372-9940-e498a45be1d0" target="p_5"/>
+      <arc id="3121418460080" source="p_5" target="skip_2"/>
+      <arc id="3121418460176" source="ced0afe3-9021-4931-a1a0-ae63beae2037" target="p_6"/>
+      <arc id="3121418461136" source="p_6" target="d3693a3d-be4a-407a-a57b-3dfbf9a7844a"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

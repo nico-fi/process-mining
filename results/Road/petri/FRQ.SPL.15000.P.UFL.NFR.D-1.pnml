@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="ent_ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8">
+        <name>
+          <text>ent_ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8</text>
+        </name>
+      </place>
+      <place id="ent_id1cd5379b-7116-400c-9574-f1763842c2e9">
+        <name>
+          <text>ent_id1cd5379b-7116-400c-9574-f1763842c2e9</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="exi_id59cd1772-3e88-40c2-8e65-8f4377843bd4">
+        <name>
+          <text>exi_id59cd1772-3e88-40c2-8e65-8f4377843bd4</text>
+        </name>
+      </place>
+      <place id="ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5">
+        <name>
+          <text>ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5</text>
+        </name>
+      </place>
+      <place id="exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5">
+        <name>
+          <text>exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5</text>
+        </name>
+      </place>
+      <place id="ent_idb8201062-1762-4310-b5e0-6a775f91f838">
+        <name>
+          <text>ent_idb8201062-1762-4310-b5e0-6a775f91f838</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <transition id="ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8">
+        <name>
+          <text>Add penalty</text>
+        </name>
+      </transition>
+      <transition id="idb8201062-1762-4310-b5e0-6a775f91f838">
+        <name>
+          <text>Send for Credit Collection</text>
+        </name>
+      </transition>
+      <transition id="f413633f-f7aa-469b-bd0e-9447ccc4c3de">
+        <name>
+          <text>f413633f-f7aa-469b-bd0e-9447ccc4c3de</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="f7402f7d-d081-4bfb-a294-7cacf5c4f0dc"/>
+      </transition>
+      <transition id="id2bbb58e7-6e99-424a-ba28-6571366f34e5">
+        <name>
+          <text>id2bbb58e7-6e99-424a-ba28-6571366f34e5</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="9687e264-df9a-4be2-9865-22f6c52429aa"/>
+      </transition>
+      <transition id="ee878b86-714d-418c-b348-facd2e0527e4">
+        <name>
+          <text>ee878b86-714d-418c-b348-facd2e0527e4</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="a4b2040b-d37d-4f8f-b2db-1dd8a21cf44b"/>
+      </transition>
+      <transition id="9dcc2500-d6f8-474e-91cd-6e0f7773925a">
+        <name>
+          <text>9dcc2500-d6f8-474e-91cd-6e0f7773925a</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="1c4cc365-6ce8-4734-a430-06748838a8fc"/>
+      </transition>
+      <transition id="id6aa4e1fa-9456-4f67-bddc-ce7c450793a8">
+        <name>
+          <text>Payment</text>
+        </name>
+      </transition>
+      <transition id="id870d0e71-cad5-45a6-91f7-644a18f8b0f2">
+        <name>
+          <text>Send Fine</text>
+        </name>
+      </transition>
+      <transition id="ida308b9fa-4f97-4328-a222-d526c85e22f0">
+        <name>
+          <text>Create Fine</text>
+        </name>
+      </transition>
+      <transition id="id6bcf7cf2-389b-4519-870a-c27c19343551">
+        <name>
+          <text>Insert Fine Notification</text>
+        </name>
+      </transition>
+      <arc id="3121453238832" source="ent_ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8" target="ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8"/>
+      <arc id="3121440916576" source="idb8201062-1762-4310-b5e0-6a775f91f838" target="ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5"/>
+      <arc id="3121440918160" source="id870d0e71-cad5-45a6-91f7-644a18f8b0f2" target="exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5"/>
+      <arc id="3121440917680" source="ee878b86-714d-418c-b348-facd2e0527e4" target="ent_id1cd5379b-7116-400c-9574-f1763842c2e9"/>
+      <arc id="3121469162736" source="ida308b9fa-4f97-4328-a222-d526c85e22f0" target="exi_id59cd1772-3e88-40c2-8e65-8f4377843bd4"/>
+      <arc id="3121440917248" source="exi_id59cd1772-3e88-40c2-8e65-8f4377843bd4" target="9dcc2500-d6f8-474e-91cd-6e0f7773925a"/>
+      <arc id="3121469162256" source="exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5" target="id6bcf7cf2-389b-4519-870a-c27c19343551"/>
+      <arc id="3121431581984" source="exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5" target="f413633f-f7aa-469b-bd0e-9447ccc4c3de"/>
+      <arc id="3121431584048" source="ent_idb8201062-1762-4310-b5e0-6a775f91f838" target="idb8201062-1762-4310-b5e0-6a775f91f838"/>
+      <arc id="3121440916816" source="f413633f-f7aa-469b-bd0e-9447ccc4c3de" target="ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5"/>
+      <arc id="3121455181152" source="ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5" target="id2bbb58e7-6e99-424a-ba28-6571366f34e5"/>
+      <arc id="3121469164896" source="exi_id59cd1772-3e88-40c2-8e65-8f4377843bd4" target="id870d0e71-cad5-45a6-91f7-644a18f8b0f2"/>
+      <arc id="3121440916336" source="id6bcf7cf2-389b-4519-870a-c27c19343551" target="ent_ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8"/>
+      <arc id="3121469165424" source="ent_id1cd5379b-7116-400c-9574-f1763842c2e9" target="id6aa4e1fa-9456-4f67-bddc-ce7c450793a8"/>
+      <arc id="3121440918400" source="id6aa4e1fa-9456-4f67-bddc-ce7c450793a8" target="ent_id2bbb58e7-6e99-424a-ba28-6571366f34e5"/>
+      <arc id="3121469163408" source="source" target="ida308b9fa-4f97-4328-a222-d526c85e22f0"/>
+      <arc id="3121440919456" source="id2bbb58e7-6e99-424a-ba28-6571366f34e5" target="sink"/>
+      <arc id="3121440915904" source="9dcc2500-d6f8-474e-91cd-6e0f7773925a" target="ent_id1cd5379b-7116-400c-9574-f1763842c2e9"/>
+      <arc id="3121431581648" source="exi_id4e6427d1-ee2b-440b-b81d-fdb7409447f5" target="ee878b86-714d-418c-b348-facd2e0527e4"/>
+      <arc id="3121469165520" source="ided6c1fe6-4fab-4fe5-ae2f-f223cfedadd8" target="ent_idb8201062-1762-4310-b5e0-6a775f91f838"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
