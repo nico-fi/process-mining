@@ -72,7 +72,7 @@ class Miner:
         :param order: criterio di ordinamento delle varianti
         :param algo: algoritmo da utilizzare nell'apprendimento del modello
         :param cut: numero di istanze da esaminare preliminarmente
-        :param top: numero di varianti da impiegare nella costruzione del modello
+        :param top: numero di varianti da impiegare nella costruzione del modello (None per impiegare una distribuzione di Pareto)
         :param filtering: booleano per l'utilizzo di tecniche di filtering
         :param frequency: booleano per l'utilizzo delle frequenze nella costruzione del modello
         :param update: booleano per l'apprendimento dinamico del modello
@@ -136,12 +136,19 @@ class Miner:
         """
         Determina le varianti più significative all'istante corrente secondo il criterio d'ordine selezionato
         """
+        top_variants = self.top
+        if top_variants is None:
+            counter = 0
+            top_variants = 0
+            while counter / self.processed_traces < 0.8:
+                counter += sorted(self.variants.values(), reverse=True)[top_variants]
+                top_variants += 1
         if self.order == Order.FRQ:
-            self.best_variants = {item[0]: item[1] for item in self.variants.most_common(self.top)}
+            self.best_variants = {item[0]: item[1] for item in self.variants.most_common(top_variants)}
         else:
             candidate_variants = list(item[0] for item in self.variants.most_common())
             candidate_variants.sort(key=lambda v: len(v), reverse=self.order == Order.MAX)
-            self.best_variants = {var: self.variants[var] for var in candidate_variants[:self.top]}
+            self.best_variants = {var: self.variants[var] for var in candidate_variants[:top_variants]}
 
     def learn_model(self):
         """
@@ -205,16 +212,18 @@ class Miner:
         filtering = 'UFL' if self.filtering else 'NFL'
         frequency = 'UFR' if self.frequency else 'NFR'
         update = 'D' if self.update else 'S'
-        file = f'{self.order.name}.{self.algo.name}.{self.cut}.{self.top}.{filtering}.{frequency}.{update}'
+        top_variants = 'P' if self.top is None else self.top
+        file = f'{self.order.name}.{self.algo.name}.{self.cut}.{top_variants}.{filtering}.{frequency}.{update}'
         folder = path.join('results', self.log_name, 'report')
         makedirs(folder, exist_ok=True)
+        top_variants = max(len(variants.keys()) for variants in self.drift_variants)
         columns = ['trace', 'places', 'transitions', 'arcs', 'ext_cardoso',
-                   *[f'trace_{i}' for i in range(1, self.top + 1)]]
+                   *[f'trace_{i}' for i in range(1, top_variants + 1)]]
         report = DataFrame(columns=columns)
         report.index.name = 'n°_training'
         for index, current_variants in enumerate(self.drift_variants):
             traces = [f'[{v}]{k}' if self.order == Order.FRQ else f'[{len(k)}:{v}]{k}' for k, v in
-                      current_variants.items()] + [None] * (self.top - len(current_variants))
+                      current_variants.items()] + [None] * (top_variants - len(current_variants))
             report.loc[len(report)] = [self.drift_moments[index], *self.compute_model_complexity(index), *traces]
         report.to_csv(path.join(folder, file + '.csv'))
         folder = path.join('results', self.log_name, 'evaluation')
