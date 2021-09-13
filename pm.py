@@ -186,7 +186,8 @@ class Miner:
         variant = precision_evaluator.Variants.ALIGN_ETCONFORMANCE
         parameters = {variant.value.Parameters.SHOW_PROGRESS_BAR: False}
         precision = precision_evaluator.apply(log, *self.models[-1], variant=variant, parameters=parameters)
-        self.evaluations.append([fitness, precision, 2 * fitness * precision / (fitness + precision)])
+        f_measure = 2 * fitness * precision / (fitness + precision) if fitness != 0 else 0
+        self.evaluations.append([fitness, precision, f_measure])
 
     def compute_model_complexity(self, index):
         """
