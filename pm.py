@@ -72,7 +72,7 @@ class Miner:
         :param order: criterio di ordinamento delle varianti
         :param algo: algoritmo da utilizzare nell'apprendimento del modello
         :param cut: numero di istanze da esaminare preliminarmente
-        :param top: numero di varianti da impiegare nella costruzione del modello (None per impiegare una distribuzione di Pareto)
+        :param top: numero di varianti da impiegare nella costruzione del modello (None per la distribuzione di Pareto)
         :param filtering: booleano per l'utilizzo di tecniche di filtering
         :param frequency: booleano per l'utilizzo delle frequenze nella costruzione del modello
         :param update: booleano per l'apprendimento dinamico del modello
@@ -289,8 +289,9 @@ class Miner:
                     report = read_csv(path.join(folder, 'report', file))
                     row.append(str(report['ext_cardoso'].tolist()))
                     summary.loc[len(summary)] = row
-            summary['top-variants'] = summary['top-variants'].astype(int)
+            summary['top-variants'] = summary['top-variants'].replace('P', -1).astype(int)
             summary = summary.sort_values(['order', 'top-variants', 'set-up'], ignore_index=True)
+            summary['top-variants'] = summary['top-variants'].replace(-1, 'P')
             summary.index.name = 'experiment'
             summary.index += 1
             summary.to_csv(path.join(folder, algo.name + '.csv'))
