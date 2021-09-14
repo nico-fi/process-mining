@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="ent_idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d">
+        <name>
+          <text>ent_idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d</text>
+        </name>
+      </place>
+      <place id="ent_id4ac7ac62-ccdd-42fe-8bdc-e9944f4ad365">
+        <name>
+          <text>ent_id4ac7ac62-ccdd-42fe-8bdc-e9944f4ad365</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="ent_id47f9c5b9-db47-4492-b4c4-243fa2c731ce">
+        <name>
+          <text>ent_id47f9c5b9-db47-4492-b4c4-243fa2c731ce</text>
+        </name>
+      </place>
+      <place id="exi_id2014523f-f40b-415e-b427-c2c37c8e8cc3">
+        <name>
+          <text>exi_id2014523f-f40b-415e-b427-c2c37c8e8cc3</text>
+        </name>
+      </place>
+      <transition id="id0ffc91ed-f0f3-4a10-b3f2-baad7bba11e9">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="id77657753-11ec-459e-b7a8-28af35f85dab">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <transition id="5449020b-9cc4-49f3-b346-3af239cfbf22">
+        <name>
+          <text>5449020b-9cc4-49f3-b346-3af239cfbf22</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="07e80186-c4a4-46e6-a953-ee2fee6edeb4"/>
+      </transition>
+      <transition id="9e478b04-4cad-4a8e-a0e1-0e36fdf2c77f">
+        <name>
+          <text>9e478b04-4cad-4a8e-a0e1-0e36fdf2c77f</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="55670990-75e0-45ef-9c43-6c6af4099279"/>
+      </transition>
+      <transition id="idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="id47f9c5b9-db47-4492-b4c4-243fa2c731ce">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <arc id="2035197732992" source="5449020b-9cc4-49f3-b346-3af239cfbf22" target="ent_id4ac7ac62-ccdd-42fe-8bdc-e9944f4ad365"/>
+      <arc id="2035197475568" source="id47f9c5b9-db47-4492-b4c4-243fa2c731ce" target="sink"/>
+      <arc id="2035197733760" source="exi_id2014523f-f40b-415e-b427-c2c37c8e8cc3" target="id0ffc91ed-f0f3-4a10-b3f2-baad7bba11e9"/>
+      <arc id="2035197630352" source="ent_idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d" target="idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d"/>
+      <arc id="2035197475232" source="idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d" target="ent_id47f9c5b9-db47-4492-b4c4-243fa2c731ce"/>
+      <arc id="2035197474992" source="9e478b04-4cad-4a8e-a0e1-0e36fdf2c77f" target="ent_id4ac7ac62-ccdd-42fe-8bdc-e9944f4ad365"/>
+      <arc id="2035199413312" source="exi_id2014523f-f40b-415e-b427-c2c37c8e8cc3" target="9e478b04-4cad-4a8e-a0e1-0e36fdf2c77f"/>
+      <arc id="2035197475520" source="id0ffc91ed-f0f3-4a10-b3f2-baad7bba11e9" target="ent_idf0e0a354-00fe-407d-9ce4-bc6f3b20f27d"/>
+      <arc id="2035197474896" source="id77657753-11ec-459e-b7a8-28af35f85dab" target="exi_id2014523f-f40b-415e-b427-c2c37c8e8cc3"/>
+      <arc id="2035197732560" source="ent_id4ac7ac62-ccdd-42fe-8bdc-e9944f4ad365" target="id77657753-11ec-459e-b7a8-28af35f85dab"/>
+      <arc id="2035197630688" source="ent_id47f9c5b9-db47-4492-b4c4-243fa2c731ce" target="id47f9c5b9-db47-4492-b4c4-243fa2c731ce"/>
+      <arc id="2035199414128" source="source" target="5449020b-9cc4-49f3-b346-3af239cfbf22"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

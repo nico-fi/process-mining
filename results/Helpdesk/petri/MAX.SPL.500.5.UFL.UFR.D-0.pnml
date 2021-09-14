@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="ent_idc5fcbb05-5835-4a30-ae26-8aa448104711">
+        <name>
+          <text>ent_idc5fcbb05-5835-4a30-ae26-8aa448104711</text>
+        </name>
+      </place>
+      <place id="exi_idae0faea3-9987-48fa-830f-d1068408f9b0">
+        <name>
+          <text>exi_idae0faea3-9987-48fa-830f-d1068408f9b0</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="exi_iddb5de916-37c2-44a9-9125-f44e364c136b">
+        <name>
+          <text>exi_iddb5de916-37c2-44a9-9125-f44e364c136b</text>
+        </name>
+      </place>
+      <place id="ent_id3c07dcdc-9165-4f2d-bbc9-a6adde467ac1">
+        <name>
+          <text>ent_id3c07dcdc-9165-4f2d-bbc9-a6adde467ac1</text>
+        </name>
+      </place>
+      <place id="exi_id7d83365a-8b3a-44a4-9b6f-c45e3c68e77c">
+        <name>
+          <text>exi_id7d83365a-8b3a-44a4-9b6f-c45e3c68e77c</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5">
+        <name>
+          <text>ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5</text>
+        </name>
+      </place>
+      <transition id="idca55ecfb-978d-4f4d-ac28-b346da3b274b">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="id9d9916e7-0fcc-4144-bff1-950a26900324">
+        <name>
+          <text>Wait</text>
+        </name>
+      </transition>
+      <transition id="id6867997a-c0cd-4a3b-87d7-72e6e6ae3a61">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <transition id="86f74faa-184f-4933-ad9c-4d1bef095629">
+        <name>
+          <text>86f74faa-184f-4933-ad9c-4d1bef095629</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="479810a8-5722-4b66-82d9-aff5c240c4ce"/>
+      </transition>
+      <transition id="d6274223-bd75-489c-bdf8-f865de7a6e4f">
+        <name>
+          <text>d6274223-bd75-489c-bdf8-f865de7a6e4f</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="94a51d39-b0d2-4fe5-a38e-811e02844519"/>
+      </transition>
+      <transition id="id18aae993-fcd0-4cd2-9582-36b38649c624">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="idd1e6b562-77fe-438f-b3d4-a4f1bbd856f0">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="2b37ffb7-e84c-480d-a6b4-40044d1217df">
+        <name>
+          <text>2b37ffb7-e84c-480d-a6b4-40044d1217df</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="a39fa5fc-19d9-4bfa-91f7-e9aa30c8595c"/>
+      </transition>
+      <transition id="bff8cb7c-134d-4e36-ab13-f438ed890e64">
+        <name>
+          <text>bff8cb7c-134d-4e36-ab13-f438ed890e64</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="9f63c6e5-15ff-475b-b9e3-cb5b2e514fe5"/>
+      </transition>
+      <transition id="5fbd9a06-6dd8-4621-9a3a-62e645f44057">
+        <name>
+          <text>5fbd9a06-6dd8-4621-9a3a-62e645f44057</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="f15eded6-726d-4c94-9760-3ae5afc365da"/>
+      </transition>
+      <transition id="id087b20e4-8221-4978-92b7-b6ccf538abdd">
+        <name>
+          <text>Create SW anomaly</text>
+        </name>
+      </transition>
+      <arc id="2314985994800" source="2b37ffb7-e84c-480d-a6b4-40044d1217df" target="ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5"/>
+      <arc id="2314985993264" source="id9d9916e7-0fcc-4144-bff1-950a26900324" target="ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5"/>
+      <arc id="2313027923056" source="idd1e6b562-77fe-438f-b3d4-a4f1bbd856f0" target="sink"/>
+      <arc id="2313024659072" source="id6867997a-c0cd-4a3b-87d7-72e6e6ae3a61" target="exi_id7d83365a-8b3a-44a4-9b6f-c45e3c68e77c"/>
+      <arc id="2313027922576" source="exi_idae0faea3-9987-48fa-830f-d1068408f9b0" target="id9d9916e7-0fcc-4144-bff1-950a26900324"/>
+      <arc id="2313024655520" source="exi_idae0faea3-9987-48fa-830f-d1068408f9b0" target="5fbd9a06-6dd8-4621-9a3a-62e645f44057"/>
+      <arc id="2313027923632" source="idca55ecfb-978d-4f4d-ac28-b346da3b274b" target="exi_iddb5de916-37c2-44a9-9125-f44e364c136b"/>
+      <arc id="2313027922096" source="ent_idc5fcbb05-5835-4a30-ae26-8aa448104711" target="id6867997a-c0cd-4a3b-87d7-72e6e6ae3a61"/>
+      <arc id="2313032166080" source="exi_iddb5de916-37c2-44a9-9125-f44e364c136b" target="2b37ffb7-e84c-480d-a6b4-40044d1217df"/>
+      <arc id="2313027922624" source="exi_iddb5de916-37c2-44a9-9125-f44e364c136b" target="idd1e6b562-77fe-438f-b3d4-a4f1bbd856f0"/>
+      <arc id="2313027921616" source="ent_id3c07dcdc-9165-4f2d-bbc9-a6adde467ac1" target="idca55ecfb-978d-4f4d-ac28-b346da3b274b"/>
+      <arc id="2313027770592" source="exi_id7d83365a-8b3a-44a4-9b6f-c45e3c68e77c" target="bff8cb7c-134d-4e36-ab13-f438ed890e64"/>
+      <arc id="2313027922720" source="id087b20e4-8221-4978-92b7-b6ccf538abdd" target="ent_id3c07dcdc-9165-4f2d-bbc9-a6adde467ac1"/>
+      <arc id="2313027921712" source="ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5" target="id18aae993-fcd0-4cd2-9582-36b38649c624"/>
+      <arc id="2313027923296" source="exi_idae0faea3-9987-48fa-830f-d1068408f9b0" target="id087b20e4-8221-4978-92b7-b6ccf538abdd"/>
+      <arc id="2314985992592" source="bff8cb7c-134d-4e36-ab13-f438ed890e64" target="ent_id06bc6a58-1f59-468d-bb50-3572ba27d5b5"/>
+      <arc id="2314985989024" source="source" target="86f74faa-184f-4933-ad9c-4d1bef095629"/>
+      <arc id="2313027922336" source="5fbd9a06-6dd8-4621-9a3a-62e645f44057" target="ent_id3c07dcdc-9165-4f2d-bbc9-a6adde467ac1"/>
+      <arc id="2314985993648" source="d6274223-bd75-489c-bdf8-f865de7a6e4f" target="ent_idc5fcbb05-5835-4a30-ae26-8aa448104711"/>
+      <arc id="2313027922384" source="id18aae993-fcd0-4cd2-9582-36b38649c624" target="exi_idae0faea3-9987-48fa-830f-d1068408f9b0"/>
+      <arc id="2313027769824" source="exi_id7d83365a-8b3a-44a4-9b6f-c45e3c68e77c" target="d6274223-bd75-489c-bdf8-f865de7a6e4f"/>
+      <arc id="2313031895024" source="86f74faa-184f-4933-ad9c-4d1bef095629" target="ent_idc5fcbb05-5835-4a30-ae26-8aa448104711"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

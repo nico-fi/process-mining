@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <transition id="skip_2">
+        <name>
+          <text>skip_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="327e619b-1806-41a1-8875-5629fdc8b28f"/>
+      </transition>
+      <transition id="skip_4">
+        <name>
+          <text>skip_4</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="a650d12f-a6af-48d4-8d77-f95cac78e9a3"/>
+      </transition>
+      <transition id="66e3a7ea-2dd6-4e8f-b840-56a6e8ce5862">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="skip_1">
+        <name>
+          <text>skip_1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="5792780a-4dfb-4bd7-bac4-7e03ffc86364"/>
+      </transition>
+      <transition id="f2328174-459e-4437-8242-e62d25d0fc8b">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <transition id="skip_3">
+        <name>
+          <text>skip_3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="9a3e3ab5-9ee1-4c35-af1e-751fab545b81"/>
+      </transition>
+      <transition id="3c0b0688-e7ef-4489-b24a-82c38e7fdf40">
+        <name>
+          <text>Wait</text>
+        </name>
+      </transition>
+      <transition id="eb02a8c9-7143-481c-8ce1-5b4985ce5ec0">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="39544cce-ea35-4024-91fa-679f49883742">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <arc id="2035200086080" source="source" target="skip_1"/>
+      <arc id="2035200088864" source="source" target="3c0b0688-e7ef-4489-b24a-82c38e7fdf40"/>
+      <arc id="2035200088768" source="3c0b0688-e7ef-4489-b24a-82c38e7fdf40" target="p_3"/>
+      <arc id="2035205073216" source="skip_2" target="p_4"/>
+      <arc id="2035205071392" source="f2328174-459e-4437-8242-e62d25d0fc8b" target="p_4"/>
+      <arc id="2035205074656" source="p_4" target="skip_3"/>
+      <arc id="2035205074176" source="skip_3" target="p_3"/>
+      <arc id="2035197084960" source="eb02a8c9-7143-481c-8ce1-5b4985ce5ec0" target="p_3"/>
+      <arc id="2035197087168" source="p_3" target="39544cce-ea35-4024-91fa-679f49883742"/>
+      <arc id="2035197087648" source="39544cce-ea35-4024-91fa-679f49883742" target="p_5"/>
+      <arc id="2035200088432" source="skip_1" target="p_3"/>
+      <arc id="2035205072688" source="source" target="skip_2"/>
+      <arc id="2035205073264" source="source" target="f2328174-459e-4437-8242-e62d25d0fc8b"/>
+      <arc id="2035197086832" source="p_4" target="eb02a8c9-7143-481c-8ce1-5b4985ce5ec0"/>
+      <arc id="2035197085152" source="p_5" target="skip_4"/>
+      <arc id="2035197084336" source="skip_4" target="sink"/>
+      <arc id="2035197085104" source="p_5" target="66e3a7ea-2dd6-4e8f-b840-56a6e8ce5862"/>
+      <arc id="2035197085968" source="66e3a7ea-2dd6-4e8f-b840-56a6e8ce5862" target="sink"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_4">
+        <name>
+          <text>p_4</text>
+        </name>
+      </place>
+      <transition id="76c586eb-6281-481a-a911-864c7b50a34a">
+        <name>
+          <text>Wait</text>
+        </name>
+      </transition>
+      <transition id="959a0373-26f2-4c00-9fd0-125600db3718">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="3cecf5d9-b233-4eb1-ba0b-58a69dec3576">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="5136da85-4f88-4650-b87a-58feb94a6db1">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="b27f33d8-61d7-40e3-8313-f246fd3f417e">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <arc id="2035206740576" source="source" target="b27f33d8-61d7-40e3-8313-f246fd3f417e"/>
+      <arc id="2035206740672" source="b27f33d8-61d7-40e3-8313-f246fd3f417e" target="p_4"/>
+      <arc id="2035206740864" source="5136da85-4f88-4650-b87a-58feb94a6db1" target="p_3"/>
+      <arc id="2035206741344" source="p_5" target="3cecf5d9-b233-4eb1-ba0b-58a69dec3576"/>
+      <arc id="2035206741440" source="3cecf5d9-b233-4eb1-ba0b-58a69dec3576" target="sink"/>
+      <arc id="2035206740240" source="source" target="76c586eb-6281-481a-a911-864c7b50a34a"/>
+      <arc id="2035206740336" source="76c586eb-6281-481a-a911-864c7b50a34a" target="p_3"/>
+      <arc id="2035206740816" source="p_4" target="5136da85-4f88-4650-b87a-58feb94a6db1"/>
+      <arc id="2035206741104" source="p_3" target="959a0373-26f2-4c00-9fd0-125600db3718"/>
+      <arc id="2035206741200" source="959a0373-26f2-4c00-9fd0-125600db3718" target="p_5"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

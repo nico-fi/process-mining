@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <transition id="483a1f10-c251-4f77-b3db-f790bb4a7118">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="e0689405-c9a7-4539-8541-c257d7bfe0df">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <transition id="e62857e1-c402-484d-9d4c-75cbc99bfddd">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="1afe1b88-3d0f-48c5-b2f7-20d0812d40a5">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="skip_3">
+        <name>
+          <text>skip_3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="731ca40b-05b9-49ac-bdf7-fec99e45a9f4"/>
+      </transition>
+      <arc id="2035205791808" source="e0689405-c9a7-4539-8541-c257d7bfe0df" target="p_3"/>
+      <arc id="2035205792384" source="p_3" target="1afe1b88-3d0f-48c5-b2f7-20d0812d40a5"/>
+      <arc id="2035206744960" source="e62857e1-c402-484d-9d4c-75cbc99bfddd" target="p_7"/>
+      <arc id="2035206744192" source="1afe1b88-3d0f-48c5-b2f7-20d0812d40a5" target="p_6"/>
+      <arc id="2035206743952" source="p_7" target="483a1f10-c251-4f77-b3db-f790bb4a7118"/>
+      <arc id="2035206745104" source="p_6" target="e62857e1-c402-484d-9d4c-75cbc99bfddd"/>
+      <arc id="2035205791904" source="source" target="e0689405-c9a7-4539-8541-c257d7bfe0df"/>
+      <arc id="2035206745008" source="p_7" target="skip_3"/>
+      <arc id="2035206744624" source="483a1f10-c251-4f77-b3db-f790bb4a7118" target="sink"/>
+      <arc id="2035206744048" source="skip_3" target="p_6"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
