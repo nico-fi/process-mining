@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="exi_idc9af1f14-f57a-4f92-be53-33250105bc20">
+        <name>
+          <text>exi_idc9af1f14-f57a-4f92-be53-33250105bc20</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="ent_ide173bf23-302b-45f8-80f4-4c1f9036f8d5">
+        <name>
+          <text>ent_ide173bf23-302b-45f8-80f4-4c1f9036f8d5</text>
+        </name>
+      </place>
+      <place id="exi_id6c9ce8e3-57e2-4adc-be7b-27a201e782db">
+        <name>
+          <text>exi_id6c9ce8e3-57e2-4adc-be7b-27a201e782db</text>
+        </name>
+      </place>
+      <place id="exi_id673be059-a7c5-4f53-b329-50df51e355a4">
+        <name>
+          <text>exi_id673be059-a7c5-4f53-b329-50df51e355a4</text>
+        </name>
+      </place>
+      <place id="ent_id2cd20382-dbc6-4054-9c20-89866d9ab595">
+        <name>
+          <text>ent_id2cd20382-dbc6-4054-9c20-89866d9ab595</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e">
+        <name>
+          <text>ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e</text>
+        </name>
+      </place>
+      <transition id="idc593121a-c223-4f2c-8e31-9b314edeed2c">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="id2cd20382-dbc6-4054-9c20-89866d9ab595">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="f609bdf7-a842-462b-bcda-fdad30281272">
+        <name>
+          <text>f609bdf7-a842-462b-bcda-fdad30281272</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="859e7423-2b24-424a-821c-05eccf676122"/>
+      </transition>
+      <transition id="id080d31bb-943b-412b-8527-c0ef1ef34134">
+        <name>
+          <text>Wait</text>
+        </name>
+      </transition>
+      <transition id="id07c9971c-5a74-414a-ae86-04d6b32a6037">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="4214104d-8112-4428-ad60-69c47db4612f">
+        <name>
+          <text>4214104d-8112-4428-ad60-69c47db4612f</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="67fa918d-2a1c-4c32-88de-fe9ee2812721"/>
+      </transition>
+      <transition id="aac48674-3cb1-49c7-8a6c-b88a85b8f9b8">
+        <name>
+          <text>aac48674-3cb1-49c7-8a6c-b88a85b8f9b8</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="513e9170-54a1-4189-864f-21c8f36ba9b4"/>
+      </transition>
+      <transition id="idbca9423f-56f2-45a7-9bbe-b4162cd00d11">
+        <name>
+          <text>Insert ticket</text>
+        </name>
+      </transition>
+      <transition id="32a7a661-b0dd-40ce-a4b5-72e4a31340a0">
+        <name>
+          <text>32a7a661-b0dd-40ce-a4b5-72e4a31340a0</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="d3942027-9bc4-48b4-aaa1-0ad0b0f8e963"/>
+      </transition>
+      <transition id="id28cd3a5a-066a-42f5-a7ee-27fa1a84afa1">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <arc id="1475494853120" source="ent_ide173bf23-302b-45f8-80f4-4c1f9036f8d5" target="id07c9971c-5a74-414a-ae86-04d6b32a6037"/>
+      <arc id="1475496420400" source="id07c9971c-5a74-414a-ae86-04d6b32a6037" target="exi_idc9af1f14-f57a-4f92-be53-33250105bc20"/>
+      <arc id="1475494853168" source="id2cd20382-dbc6-4054-9c20-89866d9ab595" target="sink"/>
+      <arc id="1475494853216" source="exi_idc9af1f14-f57a-4f92-be53-33250105bc20" target="idc593121a-c223-4f2c-8e31-9b314edeed2c"/>
+      <arc id="1475494852736" source="32a7a661-b0dd-40ce-a4b5-72e4a31340a0" target="ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e"/>
+      <arc id="1475494853264" source="exi_idc9af1f14-f57a-4f92-be53-33250105bc20" target="id080d31bb-943b-412b-8527-c0ef1ef34134"/>
+      <arc id="1475494854320" source="exi_id6c9ce8e3-57e2-4adc-be7b-27a201e782db" target="idbca9423f-56f2-45a7-9bbe-b4162cd00d11"/>
+      <arc id="1475494853840" source="idc593121a-c223-4f2c-8e31-9b314edeed2c" target="ent_id2cd20382-dbc6-4054-9c20-89866d9ab595"/>
+      <arc id="1475505446624" source="exi_id673be059-a7c5-4f53-b329-50df51e355a4" target="f609bdf7-a842-462b-bcda-fdad30281272"/>
+      <arc id="1475494852880" source="id28cd3a5a-066a-42f5-a7ee-27fa1a84afa1" target="exi_id673be059-a7c5-4f53-b329-50df51e355a4"/>
+      <arc id="1475505445664" source="exi_id673be059-a7c5-4f53-b329-50df51e355a4" target="32a7a661-b0dd-40ce-a4b5-72e4a31340a0"/>
+      <arc id="1475505421616" source="ent_id2cd20382-dbc6-4054-9c20-89866d9ab595" target="id2cd20382-dbc6-4054-9c20-89866d9ab595"/>
+      <arc id="1475493993296" source="idbca9423f-56f2-45a7-9bbe-b4162cd00d11" target="ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e"/>
+      <arc id="1475496420688" source="aac48674-3cb1-49c7-8a6c-b88a85b8f9b8" target="ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e"/>
+      <arc id="1475496420208" source="f609bdf7-a842-462b-bcda-fdad30281272" target="ent_ide173bf23-302b-45f8-80f4-4c1f9036f8d5"/>
+      <arc id="1475505421184" source="source" target="4214104d-8112-4428-ad60-69c47db4612f"/>
+      <arc id="1475505444224" source="exi_id6c9ce8e3-57e2-4adc-be7b-27a201e782db" target="aac48674-3cb1-49c7-8a6c-b88a85b8f9b8"/>
+      <arc id="1475494854560" source="4214104d-8112-4428-ad60-69c47db4612f" target="exi_id6c9ce8e3-57e2-4adc-be7b-27a201e782db"/>
+      <arc id="1475494853024" source="ent_ida253d0ab-1cac-4be7-a1dd-5ebfe306a62e" target="id28cd3a5a-066a-42f5-a7ee-27fa1a84afa1"/>
+      <arc id="1475494854080" source="id080d31bb-943b-412b-8527-c0ef1ef34134" target="ent_ide173bf23-302b-45f8-80f4-4c1f9036f8d5"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

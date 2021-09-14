@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="p_10">
+        <name>
+          <text>p_10</text>
+        </name>
+      </place>
+      <place id="p_15">
+        <name>
+          <text>p_15</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <place id="p_11">
+        <name>
+          <text>p_11</text>
+        </name>
+      </place>
+      <place id="p_14">
+        <name>
+          <text>p_14</text>
+        </name>
+      </place>
+      <transition id="skip_1">
+        <name>
+          <text>skip_1</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="cbc826a2-621f-4c7a-8917-0e459698e393"/>
+      </transition>
+      <transition id="fb3df46e-048a-481e-8565-e8bb8a3d8ff6">
+        <name>
+          <text>Take in charge ticket</text>
+        </name>
+      </transition>
+      <transition id="721b9ea7-de0e-4f3a-8373-b15fd3cf8913">
+        <name>
+          <text>Wait</text>
+        </name>
+      </transition>
+      <transition id="skip_9">
+        <name>
+          <text>skip_9</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="67a52faa-beb3-41d4-b3c5-b536cc62fe03"/>
+      </transition>
+      <transition id="77276659-62c9-4ad1-b019-6a2c31ee7aa7">
+        <name>
+          <text>Resolve ticket</text>
+        </name>
+      </transition>
+      <transition id="init_loop_2">
+        <name>
+          <text>init_loop_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="cb2a7093-cf76-4a0b-bffa-4e7e53587a96"/>
+      </transition>
+      <transition id="skip_8">
+        <name>
+          <text>skip_8</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="3994fac4-ba8d-4488-b166-5f75ba579887"/>
+      </transition>
+      <transition id="skip_5">
+        <name>
+          <text>skip_5</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="d684d5e4-3ef1-4db4-bf46-f8b90af46a31"/>
+      </transition>
+      <transition id="b298a4dc-d427-4a7c-9b94-cee5562c50a9">
+        <name>
+          <text>Insert ticket</text>
+        </name>
+      </transition>
+      <transition id="skip_4">
+        <name>
+          <text>skip_4</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="728de0b2-c4c1-468a-8df8-1caaaae68383"/>
+      </transition>
+      <transition id="skip_10">
+        <name>
+          <text>skip_10</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="4fcbc6af-5de7-4180-883c-14028a1c8232"/>
+      </transition>
+      <transition id="0c29c1cd-7167-458d-a479-a3f98c3807ae">
+        <name>
+          <text>Closed</text>
+        </name>
+      </transition>
+      <transition id="1e543966-023b-4dcb-83e8-30d373122700">
+        <name>
+          <text>Assign seriousness</text>
+        </name>
+      </transition>
+      <transition id="skip_13">
+        <name>
+          <text>skip_13</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="8aa09f70-81a6-4a5b-b0e1-53106fb80721"/>
+      </transition>
+      <arc id="1475510535168" source="p_6" target="skip_4"/>
+      <arc id="1475510535936" source="p_6" target="skip_5"/>
+      <arc id="1475510641664" source="skip_9" target="p_9"/>
+      <arc id="1475510534544" source="b298a4dc-d427-4a7c-9b94-cee5562c50a9" target="p_3"/>
+      <arc id="1475510534304" source="skip_1" target="p_3"/>
+      <arc id="1475510535456" source="1e543966-023b-4dcb-83e8-30d373122700" target="p_6"/>
+      <arc id="1475519045152" source="p_14" target="77276659-62c9-4ad1-b019-6a2c31ee7aa7"/>
+      <arc id="1475519042848" source="77276659-62c9-4ad1-b019-6a2c31ee7aa7" target="p_15"/>
+      <arc id="1475510641568" source="skip_13" target="p_14"/>
+      <arc id="1475510534448" source="source" target="b298a4dc-d427-4a7c-9b94-cee5562c50a9"/>
+      <arc id="1475510537136" source="fb3df46e-048a-481e-8565-e8bb8a3d8ff6" target="p_11"/>
+      <arc id="1475510534208" source="source" target="skip_1"/>
+      <arc id="1475510534976" source="init_loop_2" target="p_5"/>
+      <arc id="1475510535360" source="p_5" target="1e543966-023b-4dcb-83e8-30d373122700"/>
+      <arc id="1475510536896" source="skip_8" target="p_10"/>
+      <arc id="1475510644544" source="p_15" target="skip_13"/>
+      <arc id="1475510641472" source="skip_4" target="p_5"/>
+      <arc id="1475510641856" source="p_15" target="0c29c1cd-7167-458d-a479-a3f98c3807ae"/>
+      <arc id="1475510537040" source="p_9" target="fb3df46e-048a-481e-8565-e8bb8a3d8ff6"/>
+      <arc id="1475508003792" source="721b9ea7-de0e-4f3a-8373-b15fd3cf8913" target="p_10"/>
+      <arc id="1475519060816" source="p_10" target="skip_10"/>
+      <arc id="1475510641232" source="0c29c1cd-7167-458d-a479-a3f98c3807ae" target="sink"/>
+      <arc id="1475510534880" source="p_3" target="init_loop_2"/>
+      <arc id="1475513997536" source="p_11" target="721b9ea7-de0e-4f3a-8373-b15fd3cf8913"/>
+      <arc id="1475519058656" source="p_10" target="skip_9"/>
+      <arc id="1475510641376" source="skip_10" target="p_14"/>
+      <arc id="1475510641760" source="skip_5" target="p_9"/>
+      <arc id="1475510537328" source="p_11" target="skip_8"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
