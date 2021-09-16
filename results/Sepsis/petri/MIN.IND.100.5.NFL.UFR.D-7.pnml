@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="p_3">
+        <name>
+          <text>p_3</text>
+        </name>
+      </place>
+      <place id="p_6">
+        <name>
+          <text>p_6</text>
+        </name>
+      </place>
+      <place id="p_8">
+        <name>
+          <text>p_8</text>
+        </name>
+      </place>
+      <place id="p_10">
+        <name>
+          <text>p_10</text>
+        </name>
+      </place>
+      <place id="p_12">
+        <name>
+          <text>p_12</text>
+        </name>
+      </place>
+      <place id="p_5">
+        <name>
+          <text>p_5</text>
+        </name>
+      </place>
+      <place id="p_7">
+        <name>
+          <text>p_7</text>
+        </name>
+      </place>
+      <place id="p_9">
+        <name>
+          <text>p_9</text>
+        </name>
+      </place>
+      <place id="p_11">
+        <name>
+          <text>p_11</text>
+        </name>
+      </place>
+      <transition id="4d14f2c5-7f13-4c07-b532-108b4a126491">
+        <name>
+          <text>ER Registration</text>
+        </name>
+      </transition>
+      <transition id="tauJoin_2">
+        <name>
+          <text>tauJoin_2</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="69d980d8-06eb-4a0a-ab4a-0f2761bb5334"/>
+      </transition>
+      <transition id="9eb482ba-5ee2-4a7b-91a4-1a74848ee06b">
+        <name>
+          <text>ER Triage</text>
+        </name>
+      </transition>
+      <transition id="skip_6">
+        <name>
+          <text>skip_6</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="36c3505a-fd48-4824-9ee9-f58404108906"/>
+      </transition>
+      <transition id="58255829-5971-4ee2-afa0-6d382e3dedb4">
+        <name>
+          <text>CRP</text>
+        </name>
+      </transition>
+      <transition id="bb9576c6-df9e-4dcb-8a93-7d8c00820008">
+        <name>
+          <text>ER Sepsis Triage</text>
+        </name>
+      </transition>
+      <transition id="skip_3">
+        <name>
+          <text>skip_3</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="ce226d06-425f-4ccc-adc2-e5fefb85a01b"/>
+      </transition>
+      <transition id="tauSplit_4">
+        <name>
+          <text>tauSplit_4</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="35aa6553-c755-4c4a-aeb5-821ad6ce4d1e"/>
+      </transition>
+      <transition id="tauJoin_5">
+        <name>
+          <text>tauJoin_5</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="d26afdca-d942-430f-930c-07d95273b083"/>
+      </transition>
+      <transition id="3dd3c7b0-edbc-4263-83bb-019efb10d981">
+        <name>
+          <text>Leucocytes</text>
+        </name>
+      </transition>
+      <arc id="3001340742528" source="skip_6" target="p_12"/>
+      <arc id="3001332059152" source="p_5" target="bb9576c6-df9e-4dcb-8a93-7d8c00820008"/>
+      <arc id="3001332059920" source="skip_3" target="p_8"/>
+      <arc id="3001333951504" source="p_7" target="tauSplit_4"/>
+      <arc id="3001340741136" source="tauSplit_4" target="p_9"/>
+      <arc id="3001340739984" source="p_12" target="tauJoin_5"/>
+      <arc id="3001340742288" source="p_11" target="skip_6"/>
+      <arc id="3001340741664" source="p_11" target="58255829-5971-4ee2-afa0-6d382e3dedb4"/>
+      <arc id="3001340743200" source="58255829-5971-4ee2-afa0-6d382e3dedb4" target="p_12"/>
+      <arc id="3001332057904" source="4d14f2c5-7f13-4c07-b532-108b4a126491" target="p_3"/>
+      <arc id="3001332058672" source="p_6" target="tauJoin_2"/>
+      <arc id="3001340740656" source="p_10" target="tauJoin_5"/>
+      <arc id="3001340741808" source="p_9" target="3dd3c7b0-edbc-4263-83bb-019efb10d981"/>
+      <arc id="3001340742576" source="tauSplit_4" target="p_11"/>
+      <arc id="3001332058288" source="9eb482ba-5ee2-4a7b-91a4-1a74848ee06b" target="p_5"/>
+      <arc id="3001332057664" source="source" target="4d14f2c5-7f13-4c07-b532-108b4a126491"/>
+      <arc id="3001332058432" source="tauJoin_2" target="sink"/>
+      <arc id="3001332058192" source="p_8" target="tauJoin_2"/>
+      <arc id="3001332059488" source="p_3" target="9eb482ba-5ee2-4a7b-91a4-1a74848ee06b"/>
+      <arc id="3001332058720" source="p_7" target="skip_3"/>
+      <arc id="3001340741856" source="9eb482ba-5ee2-4a7b-91a4-1a74848ee06b" target="p_7"/>
+      <arc id="3001332059248" source="bb9576c6-df9e-4dcb-8a93-7d8c00820008" target="p_6"/>
+      <arc id="3001333952368" source="tauJoin_5" target="p_8"/>
+      <arc id="3001340741232" source="3dd3c7b0-edbc-4263-83bb-019efb10d981" target="p_10"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>

@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnmlcoremodel">
+    <page id="n0">
+      <place id="exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca">
+        <name>
+          <text>exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca</text>
+        </name>
+      </place>
+      <place id="source">
+        <name>
+          <text>source</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="ent_id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9">
+        <name>
+          <text>ent_id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9</text>
+        </name>
+      </place>
+      <place id="ent_id851c470a-6ce0-42be-8783-de676fb88b75">
+        <name>
+          <text>ent_id851c470a-6ce0-42be-8783-de676fb88b75</text>
+        </name>
+      </place>
+      <place id="ent_ida85fdd2e-060f-46ad-a89f-52a5324906dd">
+        <name>
+          <text>ent_ida85fdd2e-060f-46ad-a89f-52a5324906dd</text>
+        </name>
+      </place>
+      <place id="sink">
+        <name>
+          <text>sink</text>
+        </name>
+      </place>
+      <place id="ent_id9960a9bd-21a0-45cb-b32e-1294fe855181">
+        <name>
+          <text>ent_id9960a9bd-21a0-45cb-b32e-1294fe855181</text>
+        </name>
+      </place>
+      <place id="ent_id49f9c239-95f0-42ea-a274-5297898e5717">
+        <name>
+          <text>ent_id49f9c239-95f0-42ea-a274-5297898e5717</text>
+        </name>
+      </place>
+      <transition id="id851c470a-6ce0-42be-8783-de676fb88b75">
+        <name>
+          <text>ER Sepsis Triage</text>
+        </name>
+      </transition>
+      <transition id="id8cbb277b-cb57-4792-a172-48e76a617c6c">
+        <name>
+          <text>Admission NC</text>
+        </name>
+      </transition>
+      <transition id="id9960a9bd-21a0-45cb-b32e-1294fe855181">
+        <name>
+          <text>CRP</text>
+        </name>
+      </transition>
+      <transition id="id49f9c239-95f0-42ea-a274-5297898e5717">
+        <name>
+          <text>id49f9c239-95f0-42ea-a274-5297898e5717</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="82aa286c-7b72-4a36-95e7-8cbdad4bd5c7"/>
+      </transition>
+      <transition id="287c65d6-b1fb-4a01-861f-c498cf5c72ef">
+        <name>
+          <text>287c65d6-b1fb-4a01-861f-c498cf5c72ef</text>
+        </name>
+        <toolspecific tool="ProM" version="6.4" activity="$invisible$" localNodeID="e654ddb6-2a4c-43d0-bfd6-b5e7d2a42fdc"/>
+      </transition>
+      <transition id="id328bff9c-9b04-428c-9ac8-3bbf558a50d1">
+        <name>
+          <text>ER Registration</text>
+        </name>
+      </transition>
+      <transition id="id3d147493-55c7-4a7d-b35f-f183ecb24da7">
+        <name>
+          <text>Leucocytes</text>
+        </name>
+      </transition>
+      <transition id="id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9">
+        <name>
+          <text>ER Triage</text>
+        </name>
+      </transition>
+      <transition id="ida85fdd2e-060f-46ad-a89f-52a5324906dd">
+        <name>
+          <text>Release A</text>
+        </name>
+      </transition>
+      <arc id="3001339051600" source="ent_ida85fdd2e-060f-46ad-a89f-52a5324906dd" target="ida85fdd2e-060f-46ad-a89f-52a5324906dd"/>
+      <arc id="3001353885296" source="id3d147493-55c7-4a7d-b35f-f183ecb24da7" target="ent_id9960a9bd-21a0-45cb-b32e-1294fe855181"/>
+      <arc id="3001353886832" source="id49f9c239-95f0-42ea-a274-5297898e5717" target="sink"/>
+      <arc id="3001331963024" source="exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca" target="287c65d6-b1fb-4a01-861f-c498cf5c72ef"/>
+      <arc id="3001353884816" source="id9960a9bd-21a0-45cb-b32e-1294fe855181" target="ent_id49f9c239-95f0-42ea-a274-5297898e5717"/>
+      <arc id="3001353885344" source="id328bff9c-9b04-428c-9ac8-3bbf558a50d1" target="ent_id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9"/>
+      <arc id="3001353886880" source="ida85fdd2e-060f-46ad-a89f-52a5324906dd" target="ent_id49f9c239-95f0-42ea-a274-5297898e5717"/>
+      <arc id="3001331067584" source="ent_id9960a9bd-21a0-45cb-b32e-1294fe855181" target="id9960a9bd-21a0-45cb-b32e-1294fe855181"/>
+      <arc id="3001353884864" source="exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca" target="id3d147493-55c7-4a7d-b35f-f183ecb24da7"/>
+      <arc id="3001353883856" source="source" target="id328bff9c-9b04-428c-9ac8-3bbf558a50d1"/>
+      <arc id="3001339051744" source="ent_id49f9c239-95f0-42ea-a274-5297898e5717" target="id49f9c239-95f0-42ea-a274-5297898e5717"/>
+      <arc id="3001353885920" source="exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca" target="id8cbb277b-cb57-4792-a172-48e76a617c6c"/>
+      <arc id="3001340082976" source="ent_id851c470a-6ce0-42be-8783-de676fb88b75" target="id851c470a-6ce0-42be-8783-de676fb88b75"/>
+      <arc id="3001353887024" source="287c65d6-b1fb-4a01-861f-c498cf5c72ef" target="ent_id49f9c239-95f0-42ea-a274-5297898e5717"/>
+      <arc id="3001353883952" source="id851c470a-6ce0-42be-8783-de676fb88b75" target="exi_id2e635d9f-74ee-48b9-97e1-33ae015de7ca"/>
+      <arc id="3001339050352" source="ent_id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9" target="id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9"/>
+      <arc id="3001353886592" source="id8cbb277b-cb57-4792-a172-48e76a617c6c" target="ent_ida85fdd2e-060f-46ad-a89f-52a5324906dd"/>
+      <arc id="3001353886160" source="id9ff0c088-becc-42b9-a485-f6a2b6a7a6c9" target="ent_id851c470a-6ce0-42be-8783-de676fb88b75"/>
+    </page>
+    <finalmarkings>
+      <marking>
+        <place idref="sink">
+          <text>1</text>
+        </place>
+      </marking>
+    </finalmarkings>
+  </net>
+</pnml>
